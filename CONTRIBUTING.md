@@ -1,0 +1,2 @@
+# Contributing
+Use one issue and feature branch per change. Read docs/requirements.md. Run npm ci, npm run test:all and npm run build with the rehearsed lockfile. Review diffs and stage explicit files. Link the issue from a pull request. A peer reviews the latest commit and the verification job must succeed before merging. Document manual UI and API evidence. Keep secrets, node_modules and generated dist out of Git. If branch protection is unavailable, record the manual review gate rather than claiming automatic enforcement.

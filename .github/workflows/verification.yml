@@ -1,0 +1,35 @@
+name: Workshop verification
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  verification:
+    name: verification
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out the proposed code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Use the classroom Node runtime
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '24.19.0'
+      - name: Require a lockfile and install reproducibly
+        run: npm ci
+      - name: Run all supplied business and boundary tests
+        run: npm run test:all
+      - name: Build the Angular application
+        run: npm run build
+      - name: Retain the production build
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        with:
+          name: device-test-guard-build
+          path: dist/
+          if-no-files-found: error
+          retention-days: 7

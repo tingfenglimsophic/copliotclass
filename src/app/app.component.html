@@ -1,0 +1,10 @@
+<h1>DeviceTest Guard</h1>
+<p>Training data only. Temperature 18 to 30 degrees C inclusive and yield at least 95 percent.</p>
+<button type="button" (click)="loadBatch()">Load local mock batch</button>
+<p role="status">{{ message() }}</p>
+<table><thead><tr><th>Record</th><th>Device</th><th>Temperatures</th><th>Yield</th><th>Status</th></tr></thead>
+<tbody>
+@for (row of records(); track row.recordId) {
+  <tr><td>{{ row.recordId }}</td><td>{{ row.deviceId }}</td><td>{{ row.temperatures.join(', ') || 'No reading' }}</td><td>{{ row.yieldPercent }}%</td><td>{{ deviceTests.status(row) }}</td></tr>
+} @empty { <tr><td colspan="5">No device records</td></tr> }
+</tbody></table>
